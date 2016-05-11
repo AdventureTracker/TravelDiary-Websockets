@@ -74,10 +74,10 @@ io.on('connection', function (socket) {
 	socket.on("rest", function (data) {
 
 		var options = {
+			"protocol": config.rest.protocol,
 			"host": config.rest.host,
 			"method": data.method,
-			"path": data.uri,
-			"port": 80,
+			"path": config.rest.version + data.uri,
 			"headers": {
 				"Content-Type": "application/json",
 				"X-TravelDiary-Device": data.device,

@@ -1,5 +1,7 @@
 {
 	"rest": {
-		"host": "https://api.jakubove.zbytocnosti.sk/v1"
+		"protocol": "https",
+		"host": "api.jakubove.zbytocnosti.sk",
+		"version": "v1"
 	}
 }
