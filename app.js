@@ -12,7 +12,11 @@ const
 // Redis password: ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5
 // Redis host: 127.10.19.130:16379
 
-var redisClient 	= redis.createClient();
+var redisClient 	= redis.createClient({
+	'password': 'ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5',
+	'port': 16379,
+	'host': '127.10.19.130'
+});
 
 redisClient.on('connect', function() {
 	console.log('[Redis] connected');
