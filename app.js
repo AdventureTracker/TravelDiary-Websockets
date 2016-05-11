@@ -73,6 +73,8 @@ io.on('connection', function (socket) {
 
 	socket.on("rest", function (data) {
 
+		console.log("[websocket] rest event: " + JSON.stringify(data));
+
 		var options = {
 			"protocol": config.rest.protocol,
 			"host": config.rest.host,
