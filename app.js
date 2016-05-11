@@ -66,21 +66,41 @@ server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
 var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
+
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
 
-	socket.on('post', function (data) {
-		// TODO: return enums
-	});
+	socket.on('set', function (data) {
 
-	socket.on('put', function (data) {
-		// TODO: process trips
+		var key = data.entity + ":" + data.data.id;
+		var value = JSON.stringify(data);
+		var response = {
+			"message": "Created",
+			"redis-key": key
+		};
+
+		redisClient.set(key, value);
+
+		this.emit("set", response);
+
 	});
 
 	socket.on('remove', function (data) {
-		// TODO: process records
+		var key = data.entity + ":" + data.id;
+		redisClient.del(key);
+
+		var response = {
+			"message": "Removed",
+			"redis-key": key
+		};
+
+		this.emit("remove", response);
+
 	});
 
 	socket.on('get', function (data) {
+
+		// redisClient.keys();
+
 		console.log(data);
 	});
 
