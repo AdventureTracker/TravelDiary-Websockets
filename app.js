@@ -22,6 +22,10 @@ redisClient.on('connect', function() {
 	console.log('[Redis] connected');
 });
 
+redisClient.on('error', function (err) {
+	console.error("Error connecting to redis", err);
+});
+
 let server = http.createServer(function (req, res) {
 	let url = req.url;
 
@@ -69,8 +73,6 @@ io.on('connection', function (socket) {
 
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
 
-	console.log("I am here bitch!");
-
 	socket.on('set', function (data) {
 
 		console.log(data);
@@ -97,7 +99,9 @@ io.on('connection', function (socket) {
 
 		var response = {
 			"message": "Removed",
-			"redis-key": key
+			"redis-key": key,
+			"id": data.id,
+			"entity": data.entity
 		};
 
 		this.emit("remove", response);
@@ -110,5 +114,17 @@ io.on('connection', function (socket) {
 
 		console.log(data);
 	});
+
+	socket.on('post_test', function (data) {
+		console.log(data);
+
+		var response = {
+			"message": "Mas stastie!",
+			"foo": "bar"
+		};
+
+		this.emit("post_test", response);
+
+	})
 
 });
