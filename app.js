@@ -14,6 +14,10 @@ const
 
 var redisClient 	= redis.createClient();
 
+redisClient.on('connect', function() {
+	console.log('[Redis] connected');
+});
+
 let server = http.createServer(function (req, res) {
 	let url = req.url;
 
@@ -53,6 +57,7 @@ let server = http.createServer(function (req, res) {
 server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
 	console.log(`Application worker ${process.pid} started...`);
 });
+
 
 var io = require('socket.io')(server);
 
