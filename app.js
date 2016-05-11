@@ -9,6 +9,8 @@ const
 	https 				= require("https")
 	;
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 let server = http.createServer(function (req, res) {
 	let url = req.url;
 
