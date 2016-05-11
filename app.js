@@ -116,11 +116,10 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('test', function (data) {
-		console.log(data.message);
 
 		var response = {
-			"message": "Mas stastie!",
-			"foo": "bar"
+			"message": "Successfully tested!",
+			"request": data.message
 		};
 
 		this.emit("test", response);
