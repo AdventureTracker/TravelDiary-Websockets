@@ -5,26 +5,9 @@ const
 	contentTypes 	= require('./utils/content-types'),
 	sysInfo 			= require('./utils/sys-info'),
 	env 					= process.env,
-	redis 				= require('redis'),
 	config 				= require('./config.json')
 	;
 
-// Redis password: ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5
-// Redis host: 127.10.19.130:16379
-
-var redisClient 	= redis.createClient({
-	'password': config.redis.password,
-	'port': config.redis.port,
-	'host': config.redis.host
-});
-
-redisClient.on('connect', function() {
-	console.log('[Redis] connected');
-});
-
-redisClient.on('error', function (err) {
-	console.error("Error connecting to redis", err);
-});
 
 let server = http.createServer(function (req, res) {
 	let url = req.url;
@@ -73,55 +56,6 @@ io.on('connection', function (socket) {
 
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
 
-	socket.on('set', function (data) {
-
-		console.log(data);
-
-		var key = data.entity + ":" + data.user + ":" + data.id;
-		var value = JSON.stringify(data);
-		var response = {
-			"message": "Created",
-			"redis-key": key
-		};
-
-		redisClient.set(key, value);
-
-		this.emit("set", response);
-
-	});
-
-	socket.on('remove', function (data) {
-
-		console.log(data);
-
-		var key = data.entity + ":" + data.user + ":" + data.id;
-		redisClient.del(key);
-
-		var response = {
-			"message": "Removed",
-			"redis-key": key,
-			"id": data.id,
-			"entity": data.entity
-		};
-
-		this.emit("remove", response);
-
-	});
-
-	socket.on('get', function (data) {
-
-		if (data.hasOwnProperty("id")) {
-			// Is simple get for item
-		}
-		else {
-			// Is list request
-		}
-
-		// redisClient.keys();
-
-		console.log(data);
-	});
-
 	socket.on('test', function (data) {
 
 		var response = {
@@ -133,8 +67,48 @@ io.on('connection', function (socket) {
 
 	});
 
-	socket.on('ping', function (data) {
+	socket.on('ping', function () {
 		this.emit('pong', {"message": "Pong bitch!"});
+	});
+
+	socket.on("rest", function (data) {
+
+		var options = {
+			"host": config.rest.host,
+			"method": data.method,
+			"path": data.uri,
+			"port": 80,
+			"headers": {
+				"Content-Type": "application/json",
+				"X-TravelDiary-Device": data.device,
+				"X-TravelDiary-Token": data.token
+			}
+		};
+
+		var req = http.request(options, function(res) {
+
+			res.setEncoding('utf8');
+
+			res.on('data', function (chunk) {
+				var response = {
+					"status": res.statusCode,
+					"content": chunk,
+					"requestType": data.requestType
+				};
+				socket.emit("rest", response);
+			});
+		});
+
+		req.on("error", function (err) {
+			console.log(err);
+		});
+
+		if (data.method != 'POST' || data.method != 'PUT') {
+			req.write(data.content);
+		}
+
+		req.end();
+
 	});
 
 });

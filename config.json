@@ -1,7 +1,5 @@
 {
-	"redis": {
-		"port": 16379,
-		"host": "127.10.19.130",
-		"password": "ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5"
+	"rest": {
+		"host": "https://api.jakubove.zbytocnosti.sk/v1"
 	}
 }
