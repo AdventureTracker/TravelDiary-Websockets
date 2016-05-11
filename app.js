@@ -13,9 +13,9 @@ const
 // Redis host: 127.10.19.130:16379
 
 var redisClient 	= redis.createClient({
-	'password': 'ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5',
-	'port': 16379,
-	'host': '127.10.19.130'
+	'password': config.redis.password,
+	'port': config.redis.port,
+	'host': config.redis.host
 });
 
 redisClient.on('connect', function() {
