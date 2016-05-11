@@ -115,8 +115,8 @@ io.on('connection', function (socket) {
 		console.log(data);
 	});
 
-	socket.on('post_test', function (data) {
-		console.log(data);
+	socket.on('test', function (data) {
+		console.log(data.message);
 
 		var response = {
 			"message": "Mas stastie!",
@@ -125,6 +125,10 @@ io.on('connection', function (socket) {
 
 		this.emit("post_test", response);
 
-	})
+	});
+
+	socket.on('ping', function (data) {
+		this.emit('pong', {"message": "Pong bitch!"});
+	});
 
 });
