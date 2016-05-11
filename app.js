@@ -1,9 +1,7 @@
-var config = require('./config.json');
+const config = require('./config.json');
 var app = require('http').createServer(handler);
 var io = require('socket.io')(app);
-var fs = require('fs');
-
-app.listen(config.port);
+const fs = require('fs');
 
 function handler (req, res) {
 	fs.readFile(__dirname + '/index.html',
@@ -19,10 +17,24 @@ function handler (req, res) {
 		});
 }
 
+app.listen(config.port);
+
 io.on('connection', function (socket) {
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
 
-	socket.on('someShittyEvent', function (data) {
+	socket.on('post', function (data) {
+		// TODO: return enums
+	});
+
+	socket.on('put', function (data) {
+		// TODO: process trips
+	});
+
+	socket.on('remove', function (data) {
+		// TODO: process records
+	});
+
+	socket.on('get', function (data) {
 		console.log(data);
 	});
 
