@@ -77,7 +77,7 @@ io.on('connection', function (socket) {
 			"protocol": config.rest.protocol,
 			"host": config.rest.host,
 			"method": data.method,
-			"path": config.rest.version + data.uri,
+			"path": config.rest.version + "/" + data.uri,
 			"headers": {
 				"Content-Type": "application/json",
 				"X-TravelDiary-Device": data.device,
