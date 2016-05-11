@@ -77,7 +77,7 @@ io.on('connection', function (socket) {
 
 		console.log(data);
 
-		var key = data.entity + ":" + data.user + ":" + data.data.id;
+		var key = data.entity + ":" + data.user + ":" + data.id;
 		var value = JSON.stringify(data);
 		var response = {
 			"message": "Created",
@@ -109,6 +109,13 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('get', function (data) {
+
+		if (data.hasOwnProperty("id")) {
+			// Is simple get for item
+		}
+		else {
+			// Is list request
+		}
 
 		// redisClient.keys();
 
