@@ -77,7 +77,8 @@ io.on('connection', function (socket) {
 				"Content-Type": "application/json",
 				"X-TravelDiary-Device": data.device,
 				"X-TravelDiary-Token": data.token
-			}
+			},
+			"rejectUnauthorized": false
 		};
 
 		var req = https.request(options, function(res) {
