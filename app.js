@@ -71,7 +71,9 @@ io.on('connection', function (socket) {
 
 	socket.on('set', function (data) {
 
-		var key = data.entity + ":" + data.data.id;
+		console.log(data);
+
+		var key = data.entity + ":" + data.user + ":" + data.data.id;
 		var value = JSON.stringify(data);
 		var response = {
 			"message": "Created",
@@ -85,7 +87,10 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('remove', function (data) {
-		var key = data.entity + ":" + data.id;
+
+		console.log(data);
+
+		var key = data.entity + ":" + data.user + ":" + data.id;
 		redisClient.del(key);
 
 		var response = {
