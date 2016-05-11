@@ -56,17 +56,6 @@ io.on('connection', function (socket) {
 
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
 
-	socket.on('test', function (data) {
-
-		var response = {
-			"message": "Successfully tested!",
-			"request": data.message
-		};
-
-		this.emit("test", response);
-
-	});
-
 	socket.on('ping', function () {
 		this.emit('pong', {"message": "Pong bitch!"});
 	});
