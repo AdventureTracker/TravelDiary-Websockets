@@ -123,7 +123,7 @@ io.on('connection', function (socket) {
 			"foo": "bar"
 		};
 
-		this.emit("post_test", response);
+		this.emit("test", response);
 
 	});
 
