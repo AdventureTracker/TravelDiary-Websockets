@@ -1,12 +1,12 @@
 const
-	http 			= require('http'),
-	fs 				= require('fs'),
-	path 			= require('path'),
+	http 					= require('http'),
+	fs 						= require('fs'),
+	path 					= require('path'),
 	contentTypes 	= require('./utils/content-types'),
-	sysInfo 		= require('./utils/sys-info'),
-	env 			= process.env,
-	redis 			= require('redis'),
-	config 			= require('./config.json')
+	sysInfo 			= require('./utils/sys-info'),
+	env 					= process.env,
+	redis 				= require('redis'),
+	config 				= require('./config.json')
 	;
 
 // Redis password: ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5
@@ -68,6 +68,8 @@ var io = require('socket.io')(server);
 io.on('connection', function (socket) {
 
 	socket.emit('welcome', {'message': 'Yo man, welcome!'});
+
+	console.log("I am here bitch!");
 
 	socket.on('set', function (data) {
 
