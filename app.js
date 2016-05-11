@@ -5,9 +5,9 @@ const
 	contentTypes 	= require('./utils/content-types'),
 	sysInfo 			= require('./utils/sys-info'),
 	env 					= process.env,
-	config 				= require('./config.json')
+	config 				= require('./config.json'),
+	https 				= require("https")
 	;
-
 
 let server = http.createServer(function (req, res) {
 	let url = req.url;
@@ -60,6 +60,10 @@ io.on('connection', function (socket) {
 		this.emit('pong', {"message": "Pong bitch!"});
 	});
 
+	socket.on("error", function (err) {
+		console.log("Websocket error: " + err);
+	});
+
 	socket.on("rest", function (data) {
 
 		console.log("[websocket] rest event: " + JSON.stringify(data));
@@ -76,7 +80,7 @@ io.on('connection', function (socket) {
 			}
 		};
 
-		var req = http.request(options, function(res) {
+		var req = https.request(options, function(res) {
 
 			res.setEncoding('utf8');
 
