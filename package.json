@@ -1,12 +1,20 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
-  "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
+  "name": "traveldiary-websockets",
+  "version": "1.0.0",
   "private": true,
+  "description": "TravelDiary Websocket server",
   "main": "start.js",
   "scripts": {
     "start": "node --use_strict start.js"
   },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "ssh://573357210c1e665b480001b9@traveldiary-jakubdubec.rhcloud.com/~/git/traveldiary.git/"
+  },
+  "author": "Jakub Dubec",
+  "license": "ISC",
+  "dependencies": {
+    "redis": "^2.6.0-2",
+    "socket.io": "^1.4.6"
+  }
 }
