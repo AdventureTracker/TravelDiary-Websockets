@@ -98,7 +98,7 @@ io.on('connection', function (socket) {
 		});
 
 		req.on("error", function (err) {
-			console.log(err);
+			console.log("REST request: " + err);
 		});
 
 		if (data.method != 'POST' || data.method != 'PUT') {
